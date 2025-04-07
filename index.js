@@ -9,9 +9,17 @@ const init = async () => {
         host: 'localhost'
     });
 
+    //koppla till databasen 
+    /*MONGODB KOD */
+
+    //Rutter 
+    const routes = require("./routes/combined.route"); 
+    server.route(routes);
+
     await server.start();
     console.log('Server running on %s', server.info.uri);
 };
+
 
 process.on('unhandledRejection', (err) => {
 
