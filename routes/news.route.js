@@ -41,6 +41,7 @@ const newsRouteArr = [
                     news_title: Joi.string().min(3).required(),
                     author: Joi.string().required(), 
                     news_content: Joi.string().min(3).required(),
+                    news_picture: Joi.string()
                 })
             }
         },
@@ -63,6 +64,7 @@ const newsRouteArr = [
                     news_title: Joi.string().min(3).required(),
                     author: Joi.string().required(), 
                     news_content: Joi.string().min(3).required(),
+                    news_picture: Joi.string(),
                 })
             }
         }, 

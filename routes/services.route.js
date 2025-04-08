@@ -32,10 +32,12 @@ const serviceRouteArr = [
         method: 'POST',
         path: '/service',
         options: {
+            auth: false,
             validate: {
                 payload: Joi.object({
                     service_name: Joi.string().min(3).required(), 
-                    service_description: Joi.string().min(3).required(), 
+                    service_description: Joi.string().min(3).required(),
+                    service_picture: Joi.string(), 
                 })
             }
         },
@@ -57,6 +59,7 @@ const serviceRouteArr = [
                 payload: Joi.object({
                     service_name: Joi.string().min(3).required(), 
                     service_description: Joi.string().min(3).required(), 
+                    service_picture: Joi.string(),
                 })
             }
         },

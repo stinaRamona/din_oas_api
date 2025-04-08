@@ -35,10 +35,12 @@ const portfolioRouteArr = [
         method: 'POST',
         path: '/portfolio',
         options: {
+            auth: false,
             validate: {
                 payload: Joi.object({
                     project_name: Joi.string().min(3).required(), 
                     project_description: Joi.string().min(3).required(),
+                    project_picture: Joi.string()
                 })
             }
         },
@@ -61,6 +63,7 @@ const portfolioRouteArr = [
                 payload: Joi.object({
                     project_name: Joi.string().min(3).required(), 
                     project_description: Joi.string().min(3).required(),
+                    project_picture: Joi.string()
                 })
             }
         },
