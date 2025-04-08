@@ -63,7 +63,7 @@ const userRouteArr = [
                 //skapa token om allt är OK 
                 const token = Jwt.sign(
                     {id: user._id}, 
-                    process.env.JWT_SECRET_KEY, //MÅSTE SKAPAS 
+                    process.env.JWT_SECRET_KEY,
                     {expiresIn: "12h"}
                 );
 
@@ -71,7 +71,7 @@ const userRouteArr = [
 
             } catch(error) {
                 console.log(error); 
-                return h.response({error: "Something webt wrong on the serverside"}).code(500);
+                return h.response({error: "Something went wrong on the serverside"}).code(500);
             }
         }
     }, 
