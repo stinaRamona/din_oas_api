@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Joi = require('joi');
 const bcrypt = require("bcrypt"); 
 const Jwt = require("jsonwebtoken")
+require('dotenv').config(); 
 
 const userRouteArr = [
     {

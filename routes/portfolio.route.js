@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const Portfolio = require('../models/portfolio');
-const Joi = require('joi');
 
 const portfolioRouteArr = [
     {
@@ -34,7 +33,7 @@ const portfolioRouteArr = [
     {
         //lägget till nytt porjekt till portfolion
         method: 'POST',
-        path: 'portfolio',
+        path: '/portfolio',
         options: {
             validate: {
                 payload: Joi.object({
@@ -56,7 +55,7 @@ const portfolioRouteArr = [
     {
         //Uppdaterar projekt i portfolion 
         method: 'PUT',
-        path: 'portfolio/{id}', 
+        path: '/portfolio/{id}', 
         options: {
             validate: {
                 payload: Joi.object({
@@ -85,7 +84,7 @@ const portfolioRouteArr = [
     {
         //Tar bort ett projekt från portfolion
         method: 'DELETE',
-        path: 'portfolio/{id}', 
+        path: '/portfolio/{id}', 
         handler: async (request, h) => {
             try {
                 const portfolio = await Portfolio.findByIdAndDelete(request.params.id); 

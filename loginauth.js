@@ -1,5 +1,6 @@
 const HapiJwt = require("hapi-auth-jwt2"); 
-const User = require("./models/user.model"); 
+const User = require("./models/user"); 
+require('dotenv').config(); 
 
 const validate = async (decoded, request, h) => {
     try {
