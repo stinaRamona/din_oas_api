@@ -1,7 +1,8 @@
 const {handleFileUpload} = require('../handlers/fileHandler'); 
 const News = require('../models/news');
 const Joi = require('joi');
-const path = require('path'); 
+const Path = require('path'); 
+const Fs = require('fs'); 
 
 const newsRouteArr = [
     {
@@ -98,44 +99,75 @@ const newsRouteArr = [
                 parse: true, 
                 maxBytes: 10 * 1024 * 1024,
             },
+            auth: false,
             validate: {
                 payload: Joi.object({
                     news_title: Joi.string().min(3).required(),
                     author: Joi.string().required(), 
                     news_content: Joi.string().min(3).required(),
-                    news_picture: Joi.any(),
+                    file: Joi.any(),
                 })
             }
         }, 
         handler: async (request, h) => {
             try {
-                const news = await News.findById(request.params.id); 
-                
+                const { file, news_title, author, news_content } = request.payload;
+                const { id } = request.params;
+        
+                // Hämta nyhetsobjektet från databasen
+                const news = await News.findById(id);
                 if (!news) {
-                    return h.response({error: 'News not found'}).code(404); 
+                    return h.response({ error: 'Nyheten kunde inte hittas.' }).code(404);
                 }
-
-                if(request.payload.news_picture) {
-                    const uploadedFile = await handleFileUpload(request.payload.news_picture, {
-                        dest: path.join(__dirname, '../uploads/news'), 
-                        allowedTypes: ['image/jpeg', 'image/jpg', 'image/png'],
-                        maxFileSize: 5 * 1024 * 1024,
+        
+                // Uppdatera fält endast om de skickas med
+                if (news_title) {
+                    news.news_title = news_title;
+                }
+                if (author) {
+                    news.author = author;
+                }
+                if (news_content) {
+                    news.news_content = news_content;
+                }
+        
+                // Hantera filuppladdning om en ny fil skickas
+                if (file && file._data) {
+                    const fileExtension = Path.extname(file.hapi.filename);
+        
+                    // Kontrollera tillåtna filtyper
+                    const allowedTypes = ['.jpeg', '.jpg', '.png'];
+                    if (!allowedTypes.includes(fileExtension)) {
+                        return h.response({ error: 'Ogiltig filtyp.' }).code(400);
+                    }
+        
+                    // Spara filen till servern
+                    const filename = `${Date.now()}-${file.hapi.filename}`;
+                    const uploadPath = Path.join(__dirname, '../uploads/', filename);
+                    const fileStream = Fs.createWriteStream(uploadPath);
+        
+                    file.pipe(fileStream);
+        
+                    await new Promise((resolve, reject) => {
+                        fileStream.on('finish', resolve);
+                        fileStream.on('error', reject);
                     });
-
-                    news.news_picture = uploadedFile.filename
+        
+                    // Uppdatera URL:en för bilden i databasen
+                    news.news_picture = `/uploads/${filename}`;
                 }
-
-                if(request.payload.news_title) { news.news_title = request.payload.news_title }
-
-                if(request.payload.author) { news.author = request.payload.author }
-
-                if(request.payload.news_content) { news.news_content = request.payload.news_content }
-
-                await news.save(); 
-                return h.response(news).code(200)
- 
-            } catch(error) {
-                return h.response({error: 'Failed to update post'}).code(500); 
+        
+                // Spara uppdaterade nyhetsdata
+                const updatedNews = await news.save();
+        
+                return h.response({
+                    message: 'Nyhet uppdaterad',
+                    news: updatedNews,
+                }).code(200);
+        
+            } catch (err) {
+                console.error('Error in updating news:', err.message);
+                return h.response({ error: 'Ett fel uppstod vid uppdateringen av nyheten.' }).code(500);
             }
         }
     }, 
