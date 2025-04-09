@@ -11,7 +11,7 @@ const ServicesSchema = new Mongoose.Schema({
     }, 
     service_picture: {
         type: String, //för URL. Alternativt annat system för bilder
-        required: true
+        default: null
     }, 
     created_at: {
         type: Date, 
