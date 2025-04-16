@@ -90,7 +90,7 @@ const userRouteArr = [
             const user = request.auth.credentials; 
             console.log("Användare:" + user); 
 
-            return { message: "Login attempt successfull. You have access to the protected route"}
+            return { message: "Login attempt successfull. You have access to the protected route", user: user}
         }
     }
 ]

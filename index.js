@@ -13,6 +13,9 @@ const init = async () => {
         port: 3000,
         host: 'localhost', 
         routes: {
+            cors: {
+                origin: ['*']
+            },
             payload: {
                 maxBytes: 10 * 1024 * 1024, //Maximal payload-storlek (10 MB)
                 multipart: { output: 'stream' }, //Stöd för multipart-form-data
