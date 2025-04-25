@@ -9,6 +9,9 @@ const portfolioRouteArr = [
         //hämtar hela protfoliolistan
         method: 'GET',
         path: '/portfolio', 
+        options: {
+            auth: false,
+        },
         handler: async (request, h) => {
             try {
                 const portfolio = await Portfolio.find();

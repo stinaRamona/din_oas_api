@@ -7,7 +7,10 @@ const Fs = require('fs');
 const serviceRouteArr = [
     {
         method: 'GET', 
-        path: '/service', 
+        path: '/service',
+        options: {
+            auth: false,
+        },
         handler: async (request, h) => {
             try {
                 const service = await Service.find(); 
