@@ -9,6 +9,9 @@ const newsRouteArr = [
         //hämta alla nyhetsinlägg
         method: 'GET', 
         path: '/news',
+        options: {
+            auth: false,
+        },
         handler: async (request, h) => {
             try {
                 const news = await News.find();
