@@ -171,6 +171,9 @@ const serviceRouteArr = [
     {
         method: 'DELETE',
         path: '/service/{id}', 
+        options: {
+            auth: false,
+        },
         handler: async (request, h) => {
             try {
                 const service = await Service.findByIdAndDelete(request.params.id); 

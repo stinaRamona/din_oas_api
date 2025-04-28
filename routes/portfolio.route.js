@@ -174,7 +174,10 @@ const portfolioRouteArr = [
     {
         //Tar bort ett projekt från portfolion
         method: 'DELETE',
-        path: '/portfolio/{id}', 
+        path: '/portfolio/{id}',
+        options: {
+            auth: false,
+        }, 
         handler: async (request, h) => {
             try {
                 const portfolio = await Portfolio.findByIdAndDelete(request.params.id); 

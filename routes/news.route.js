@@ -178,6 +178,9 @@ const newsRouteArr = [
     {
         method: 'DELETE',
         path: '/news/{id}',
+        options: {
+            auth: false,
+        },
         handler: async (request, h) => {
             try {
                 const news = await News.findByIdAndDelete(request.params.id); 
