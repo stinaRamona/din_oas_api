@@ -26,6 +26,9 @@ const newsRouteArr = [
         //hämta nyhetsinlägg med id
         method: 'GET',
         path: '/news/{id}',
+        options: {
+            auth: false,
+        },
         handler: async (request, h) => {
             try {
                 const news = await News.findById(request.params.id); 

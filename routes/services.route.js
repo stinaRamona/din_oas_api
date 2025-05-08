@@ -24,6 +24,9 @@ const serviceRouteArr = [
     {
         method: 'GET',
         path: '/service/{id}', 
+        options: {
+            auth: false,
+        },
         handler: async (request, h) => {
             try {
                 const service = await Service.findById(request.params.id); 

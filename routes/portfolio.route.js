@@ -26,6 +26,9 @@ const portfolioRouteArr = [
         //hämtar ett projekt från portfolion på id 
         method: 'GET',
         path: '/portfolio/{id}', 
+        options: {
+            auth: false
+        },
         handler: async (request, h) => {
             try {
                 const portfolio = await Portfolio.findById(request.params.id); 
