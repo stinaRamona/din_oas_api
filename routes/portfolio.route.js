@@ -32,7 +32,7 @@ const portfolioRouteArr = [
         handler: async (request, h) => {
             try {
                 const portfolio = await Portfolio.findById(request.params.id); 
-                h.response(portfolio).code(200); 
+                return h.response(portfolio).code(200); 
             } catch(error) {
                 return h.response({error: "Failed to fetch single project"}).code(500); 
             }
