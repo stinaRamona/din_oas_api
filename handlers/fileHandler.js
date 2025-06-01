@@ -6,11 +6,11 @@ const handleFileUpload = async (file) => {
         throw new Error('Ingen fil mottagen eller ogiltig filstruktur.');
     }
 
-    // Extrahera metadata från file.hapi
+    //extraherar data från file.hapi
     const { filename } = file.hapi;
     console.log('Mottagen fil:', filename);
 
-    // Spara filen till en lokal mapp
+    //sparar filen till mapp
     const uploadPath = path.join(__dirname, '../uploads', filename);
     const fileStream = fs.createWriteStream(uploadPath);
 
